@@ -4,6 +4,11 @@ function [lX,lY]=Map_2018background(xlimits,ylimits)
         ylimits (1,2) double=[6300600 6303000]  %north-south limits in UTM
     end
 
+    % This function maps 2018 satellite image and bathymetry into the current figure
+    % 
+    % Required: Matlab 2019b or later
+    % File path to satellite image on next line will need to be corrected
+    
     sat=imread('/Users/ovall/Dropbox/LeConte/satellite_imagery/Worldview/WV02_20180921_1030010084C82200_1030010086938300_058654773010_01_P001_058654774010_01_P001_2_ortho_UTM.tif');
     load bathy_2018sep_2m
     load bathybounds
