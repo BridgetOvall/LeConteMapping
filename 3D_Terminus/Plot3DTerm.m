@@ -1,4 +1,4 @@
-function mbtime=Plot3DTerm(mb)
+function [cbar,mbtime]=Plot3DTerm(mb)
 
 load '/Users/ovall/Documents/Rutgers/Research/FromNicoleAbib/Sep2018_rotatedice_dy5_dz5'
 load TerminusOrigin
@@ -9,7 +9,7 @@ load ColorPalette
 % This function calls the shadem() function for hillshade, which can be found at https://www.mathworks.com/matlabcentral/fileexchange/49065-shadem
 
 mbtime=datetime(td(mb),'ConvertFrom','datenum');
-xlimits=[-400 0];
+xlimits=[-400 -30];
 ylimits=[0 750];
 
 %redefine bathymetry coordinates (map coords)
@@ -19,7 +19,7 @@ botz=-bathy.z;
 
 %clip bathymetry to near-glacier region
 si=size(botx);
-ii=inpolygon(botx,boty,xlimits,ylimits);
+ii=inpolygon(botx,boty,[xlimits(1) xlimits(2) xlimits(2) xlimits(1)],[ylimits(1) ylimits(1) ylimits(2) ylimits(2)]);
 nn=NaN(si);
 nn(ii)=1;
 botx=botx.*nn; 
@@ -86,17 +86,19 @@ hold on
 surf([xW;xW],[yW;yW],[zW;zWlower],bathcolW)
 surf([xN;xN],[yN;yN],[zN;zNlower],bathcolN)
 ice=surf(xx,yy,ZQ,xx,'EdgeColor','none');
-plot3(melt_bot_xx,melt_bot_yy,-165*ones(length(ymelt_bot)),'r','LineWidth',5)
-melt=plot3(melt_top_xx,melt_top_yy,-30*ones(length(ymelt_top)),'r','LineWidth',5,'DisplayName','Region of Highest Melt');
-outlet=plot3(sgd_xx,sgd_yy,-165*ones(length(yshreve)),'Color',docol,'LineWidth',5,'DisplayName','Estimated Discharge Outlet');
+% plot3(melt_bot_xx,melt_bot_yy,-165*ones(length(ymelt_bot)),'r','LineWidth',5)
+% melt=plot3(melt_top_xx,melt_top_yy,-30*ones(length(ymelt_top)),'r','LineWidth',5,'DisplayName','Region of Highest Melt');
+% outlet=plot3(sgd_xx,sgd_yy,-165*ones(length(yshreve)),'Color',docol,'LineWidth',5,'DisplayName','Estimated Discharge Outlet');
 axis equal
 colormap(anom_cmap(100:-1:1,:))
 cbar=colorbar;
 ylabel(cbar,'Up-Fjord Distance (m)','FontSize',14)
 xlim(xlimits)
 ylim(ylimits)
-[lighth,MatType,gain,LightType,LightAng]=shadem([-60,20]);
+% [lighth,MatType,gain,LightType,LightAng]=shadem([-60,20]);
 set(gca,'Color',[.8 .8 .8])
 % cbar.Position=[.93 .275 .011 .5];
 view(-100,15)
+
+shading flat
 
