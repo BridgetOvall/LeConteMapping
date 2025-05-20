@@ -36,7 +36,7 @@ elseif details.Year==2024
     S=term; %to make variable names consistent between years
     %use old satellite data for now
     sat=imread([folder2018 '/WV02_20180921_1030010084C82200_1030010086938300_058654773010_01_P001_058654774010_01_P001_2_ortho_UTM.tif']);
-    load([folder 2018 '/bathybounds.mat'])
+    load([folder2018 '/bathybounds.mat'])
     cd(currentDir)
     DO=[]; %currently no estimate of discharge outlet position
 end
